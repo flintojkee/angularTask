@@ -9,8 +9,12 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatInputModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+ MatTableModule, 
+ MatSortModule,
+  
 } from '@angular/material';
+import {MatTableDataSource} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,12 +24,15 @@ import { AuthService } from '../services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http"
 import { AuthInterceptorService } from '../services/auth-interceptor.service';
 import { RegisterComponent } from './register/register.component';
+import { StorageService } from '../services/storage.service';
+import { UsersComponent } from './users/users.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    UsersComponent
   ],
   imports: [
     HttpClientModule,
@@ -41,9 +48,11 @@ import { RegisterComponent } from './register/register.component';
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule,
+     MatSortModule
   ],
-  providers: [AuthService, {
+  providers: [ AuthService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true

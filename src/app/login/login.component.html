@@ -10,7 +10,7 @@
                                      type="email" autocomplete="off"/></mat-form-field>
         <mat-form-field><input [(ngModel)]="loginData.pwd" name="password" matInput placeholder="password"
                                     type="password"/></mat-form-field>
-        <button (click)="login()" mat-raised-button color="primary">Login</button>
+        <button (click)="login()" mat-raised-button color="primary" routerLink="/">Login</button>
       </form>
     </mat-card-content>
     <mat-card-footer class="loginFooter">

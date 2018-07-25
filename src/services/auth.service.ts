@@ -2,6 +2,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { MatSnackBar } from '@angular/material';
+import { StorageService } from "./storage.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -9,15 +10,20 @@ import { MatSnackBar } from '@angular/material';
 export class AuthService {
 
   TOKEN_KEY = 'token';
-  users = [];
-  constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
-
+ 
+  constructor(public http: HttpClient, public snackBar: MatSnackBar, public StorageService:StorageService) { }
+  
 
   registerUser(registerData) {
-    this.users.push(registerData)
-    this.saveToken(registerData.token);
-    this.saveId(this.users.indexOf(registerData));
-    localStorage.setItem("users", JSON.stringify(this.users));
+    if(!this.StorageService.containsUser(registerData)){
+      this.StorageService.users.push(registerData);
+      this.saveToken(registerData.token);
+      this.saveId(this.StorageService.users.indexOf(registerData));
+      localStorage.setItem("users", JSON.stringify(this.StorageService.users));
+      this.StorageService.users =  JSON.parse(localStorage.getItem("users"));
+    }else{
+      alert('email is already used')
+    }
   }
 
   get token() {
@@ -38,16 +44,13 @@ export class AuthService {
   }
 
   loginUser(loginData) {
-    let user = this.users.find(user => user.pwd === loginData.pwd)
-
-    if(this.users.indexOf(user) >-1 && this.users[this.users.indexOf(user)].emal === loginData.pwd){
+    let user = this.StorageService.getUser(loginData);
+    if(this.StorageService.containsUser(loginData)){
       this.saveToken(user.token);
-      this.saveId(user.userId);
+      this.saveId(this.StorageService.users.indexOf(user));
     }else{
       alert("Wrong password or email");
     }
-    
-
   }
 
   saveToken(token) {

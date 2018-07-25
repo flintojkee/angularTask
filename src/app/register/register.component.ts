@@ -3,8 +3,6 @@ import { MatSnackBar, MatDatepickerInputEvent } from "@angular/material";
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../../services/auth.service';
-import { currentId } from 'async_hooks';
-
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -71,6 +69,7 @@ export class RegisterComponent implements OnInit {
   }
   ngOnInit() {
     this._currentTime = new Date();
+    this.registerData.birthday = this._currentTime;
     this.registerData.token = this._currentTime.getHours().toString()+this._currentTime.getMinutes().toString()+this._currentTime.getSeconds().toString();
   }
 
