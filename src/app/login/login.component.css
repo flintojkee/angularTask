@@ -1,0 +1,13 @@
+.login{
+  text-align: center; 
+  width: 600px; 
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-top: 84px;
+}
+.loginFooter{
+    font-size: 12px;
+}
+.loginFooter a{
+    padding-right: 50px; 
+}

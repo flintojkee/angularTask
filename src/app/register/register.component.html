@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h4>Register New User</h4>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input [(ngModel)]="registerData.email" name="email" matInput placeholder="email" type="email" autocomplete="email" [formControl]="emailFormControl"
+          [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="registerData.pwd" name="password" matInput placeholder="password" type="password" autocomplete="current-password"
+          [formControl]="passwordFormControl" [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="!passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
+          Password length should be at least 6 characters
+        </mat-error>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="registerData.name" name="name" matInput placeholder="name" autocomplete="name" [formControl]="nameFormControl"
+          [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="registerData.surname" name="surname" matInput placeholder="surname" autocomplete="surname" [formControl]="surnameFormControl"
+          [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="surnameFormControl.hasError('required')">
+          Surname is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Choose a date"
+          (dateInput)="chooseBirhday($event)" (dateChange)="chooseBirhday($event)" [formControl]="dateFormControl" [errorStateMatcher]="matcher" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dateFormControl.hasError('required')">
+              Date is
+              <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      <button [disabled]="!isValidForm()" (click)="post()" mat-raised-button color="primary">Register</button>
+    </form>
+  </mat-card-content>
+</mat-card>
